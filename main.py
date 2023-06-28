@@ -111,7 +111,7 @@ def add_offer_to_known_offers(offer):
     file.close()
 
 
-def is_offer_zipcode_in_whitelist(offer_soup, whitelisted_zipcodes:[int], link_to_offer):
+def is_offer_zipcode_in_whitelist(offer_soup, whitelisted_zipcodes:int, link_to_offer): #[int]??
 
     address = offer_soup.find_all('p', class_='ft-semi', limit=1)  # address is in "ft-semi" class
     if address:
