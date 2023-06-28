@@ -87,7 +87,7 @@ def post_offer_to_telegram(link_to_offer, chat_id):
 
 # sends a message to a telegram chat
 def send_msg_to_telegram(msg, chat_id):
-    token = get_value_from_config(["telegram_token"])
+    token = str(get_value_from_config(["telegram_token"]))
 
     msg = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + chat_id + '&parse_mode=Markdown&text=' + msg
 
@@ -194,11 +194,11 @@ def offer_meets_chat_criteria(link_to_offer, chat_id) -> bool:
 
 if __name__ == "__main__":
 
-    chat_ids = get_value_from_config(["chats"]).keys()
+    #chat_ids = get_value_from_config(["chats"]).keys()
 
-    for chat_id in chat_ids:
-        if get_value_from_config(["chats", chat_id, "debug_group"]):
-            send_msg_to_telegram("Bot started at " + str(datetime.now()), chat_id)
+    #for chat_id in chat_ids:
+    chat_id = get_value_from_config(["chat_id"])
+    send_msg_to_telegram("Bot started at " + str(datetime.now()), chat_id)
 
     while True:
         print("checking for updates ", datetime.now())
@@ -208,10 +208,10 @@ if __name__ == "__main__":
             if offer not in open("known_offers.txt").read().splitlines():
                 print("new offer", offer)
                 # for each chat: send offer to telegram, if it meets the chat's criteria
-                for chat_id in chat_ids:
-                    if offer_meets_chat_criteria(offer, chat_id):
+                #for chat_id in chat_ids:
+                #if offer_meets_chat_criteria(offer, chat_id):
                         # if there is a whitelist for this chat: Post offer only if location is in whitelist
-                        post_offer_to_telegram(offer, chat_id)
+                post_offer_to_telegram(offer, chat_id)
 
                 # finally add to known offers
                 add_offer_to_known_offers(offer)
